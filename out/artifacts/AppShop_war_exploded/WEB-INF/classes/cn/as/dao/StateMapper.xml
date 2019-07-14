@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.as.dao.StateMapper">
+
+    <select id="selectAllState" resultType="state">
+        SELECT * FROM state
+    </select>
+
+    <select id="selectStateById" resultType="state" parameterType="int">
+        SELECT * FROM state
+        <where>id=#{id}</where>
+    </select>
+</mapper>

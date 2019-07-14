@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.as.dao.AppInfoMapper">
+    
+    <insert id="addAppInfo" parameterType="appInfo">
+        INSERT INTO appInfo(
+        aiName,APKName,supportROM,interfaceLanguage,aId,appInfo,appSize,sId,onSaleDate,
+        offSaleDate,atId,downloads,flatformId,creationDate
+        ) VALUES (
+        #{aiName},#{APKName},#{supportROM},#{interfaceLanguage},#{aId},#{appInfo},#{appSize},1,#{onSaleDate},
+        #{offSaleDate},#{atId},0,#{flatformId},#{creationDate}
+        )
+    </insert>
+    
+    <delete id="deleAppInfo" parameterType="int">
+        DELETE FROM appInfo
+         <where>id=#{id}</where>
+    </delete>
+
+    <update id="updateAppInfo" parameterType="appInfo">
+        UPDATE appInfo SET aiName=#{aiName},APKName=#{APKName},supportROM=#{supportROM},
+        interfaceLanguage=#{interfaceLanguage},aId=#{aId},appInfo=#{appInfo},appSize=#{appSize},sId=#{sId},
+        onSaleDate=#{onSaleDate},offSaleDate=#{offSaleDate},atId=#{atId},downloads=#{downloads},
+        flatformId=#{flatformId}
+        <where>id=#{id}</where>
+    </update>
+
+    <update id="updateAppInfoByState" parameterType="int">
+        UPDATE appInfo SET sId=#{state}
+        <where>id=#{id}</where>
+    </update>
+
+
+    <select id="selectAllAppInfo" resultType="appInfo">
+        SELECT * FROM appInfo
+    </select>
+    
+    <select id="selectAppInfoByAdmin" parameterType="int" resultType="appInfo">
+        SELECT * FROM appInfo
+        <where>aId=#{id}</where>
+    </select>
+    
+    <select id="selectAppInfoByState" parameterType="int" resultType="appInfo">
+        SELECT * FROM appInfo
+        <where>sId=#{id}</where>
+    </select>
+
+    <select id="selectAppInfoByType" parameterType="int" resultType="appInfo">
+        SELECT * FROM appInfo
+        <where>atId=#{id}</where>
+    </select>
+
+    <select id="selectAppInfoByName" parameterType="String" resultType="appInfo">
+        SELECT  * FROM  appInfo
+        <where>aiName like '%'+#{name}+'%'</where>
+    </select>
+
+    <select id="selectAppInfoById" parameterType="int" resultType="appInfo">
+        SELECT * FROM appInfo
+        <where>id=#{id}</where>
+    </select>
+
+    <select id="selectAllAppInfo1" resultType="appInfo" parameterType="int">
+
+        SELECT TOP ${end} * FROM appInfo
+
+        <where>id NOT IN(SELECT TOP ${start} id FROM appInfo)</where>
+    </select>
+    <select id="selectAppInfoBy1" resultType="appInfo" >
+        SELECT TOP ${end} * FROM appInfo
+        <where>
+            id NOT IN(SELECT TOP ${start} id FROM appInfo)
+            <if test="name!=null">
+                AND aiName like '%'+#{name}+'%'
+            </if>
+            <if test="state!=0">
+                AND sId=#{state}
+            </if>
+            <if test="type!=0">
+                AND atId=#{type}
+            </if>
+            <if test="flatformId!=0">
+                AND flatformId=#{flatformId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

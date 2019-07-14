@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.as.dao.AppTypeMapper">
+
+    <select id="selectAppTypeByParent" parameterType="int" resultType="appType">
+        SELECT * FROM appType
+        <where>parentId=#{id}</where>
+    </select>
+
+    <select id="selectAppTypeById" parameterType="int" resultType="appType">
+        SELECT * FROM appType
+        <where>id=#{id}</where>
+    </select>
+
+    <select id="selectAllAppType" resultType="appType">
+        SELECT * FROM appType
+    </select>
+</mapper>

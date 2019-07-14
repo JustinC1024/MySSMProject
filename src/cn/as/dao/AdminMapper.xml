@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.as.dao.AdminMapper">
+
+    <insert id="addAdmin" parameterType="admin">
+        INSERT INTO admin(
+        aCode,aName,aPassword,tId,aEmail,aInfo,sId,creationDate
+        ) VALUES (
+        #{aCode},#{aName},#{aPassword},1,#{aEmail},#{aInfo},6,#{creationDate}
+        )
+    </insert>
+
+    <delete id="deleAdmin" parameterType="string">
+        DELETE FROM admin WHERE aCode= #{code}
+    </delete>
+
+    <update id="updateAdmin" parameterType="admin">
+        UPDATE admin SET aName=#{aName},aPassword=#{aPassword},aEmail=#{aEmail},aInfo=#{aInfo} WHERE aCode=#{aCode}
+    </update>
+
+    <update id="updateAdminState">
+        UPDATE admin SET sId=#{state} WHERE aCode=#{code}
+    </update>
+
+    <select id="selectAdminByCode" resultType="admin">
+        SELECT * FROM admin
+        <where>
+            aCode=#{code} AND tId=#{type}
+        </where>
+    </select>
+
+    <select id="selectAllAdmin" resultType="admin">
+        SELECT * FROM admin
+        <where>tId=1</where>
+    </select>
+
+    <select id="selectAdminByState" parameterType="int" resultType="admin">
+        SELECT * FROM admin
+        <where>state=#{state}</where>
+    </select>
+
+    <select id="selectAdminById" parameterType="int" resultType="admin">
+        SELECT * FROM admin
+        <where>id=#{id}</where>
+    </select>
+
+    <select id="selectAllAdmin1" parameterType="int" resultType="admin">
+        SELECT TOP ${end} * FROM admin
+        <where>
+            id NOT IN(SELECT TOP ${start} id FROM admin)
+            AND tId=1
+        </where>
+    </select>
+</mapper>

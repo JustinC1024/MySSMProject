@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.as.dao.AppVersionMapper">
+
+    <insert id="addAppVersion" parameterType="appVersion">
+        INSERT INTO appVersion (
+        aiId,avName,versionInfo,publishStatus,downloadLink,versionSize,apkLocPath,
+        apkFileName,creationDate
+        ) VALUES (
+        #{aiId},#{avName},#{versionInfo},#{publishStatus},#{downloadLink},#{versionSize},#{apkLocPath},
+        #{apkFileName},#{creationDate}
+        )
+    </insert>
+
+    <delete id="deleAppVersion" parameterType="int">
+        DELETE FROM appVersion
+        <where>id=#{id}</where>
+    </delete>
+
+    <select id="selectAppVersionByAppInfo" parameterType="int" resultType="appVersion">
+        SELECT * FROM appVersion
+        <where>aiId=#{id}</where>
+    </select>
+
+    <select id="selectAppVersionById" parameterType="int" resultType="appVersion">
+        SELECT * FROM appVersion
+        <where>id=#{id}</where>
+    </select>
+
+    <select id="selectAppVersionFirstBy" resultType="appVersion" parameterType="int">
+        SELECT * FROM appVersion
+        <where>aiId=#{id}</where>
+        ORDER BY id ASC
+    </select>
+
+</mapper>
